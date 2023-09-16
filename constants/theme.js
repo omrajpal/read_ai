@@ -1,13 +1,27 @@
 const COLORS = {
-  primary: "#312651",
-  secondary: "#3E4B94", // #444262
-  tertiary: "#FF7754", // #FF7754
+  primary: "#1b4965", // text
+  secondary: "#bee9e8", // notch
+  tertiary: "#62b6cb", // camera button
 
   gray: "#83829A",
   gray2: "#C1C0C8",
 
   white: "#F3F4F8",
-  lightWhite: "#FAFAFC",
+  lightWhite: "#FAFAFC", // background
+
+  // light blue bee9e8
+  // aqua blue 62b6cb
+  // dark blue 1b4965
+
+  // primary: "#1b4965",
+  // secondary: "#bee9e8", // #444262
+  // tertiary: "#62b6cb", // #FF7754
+
+  // gray: "#83829A",
+  // gray2: "#C1C0C8",
+
+  // white: "#F3F4F8",
+  // lightWhite: "#FAFAFC",
 };
 
 const FONT = {
