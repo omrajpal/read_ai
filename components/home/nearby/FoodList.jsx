@@ -3,17 +3,20 @@ import { useRouter } from "expo-router";
 import { View, Text, TouchableOpacity, ActivityIndicator } from "react-native";
 import { useState } from "react";
 
-import styles from "./nearbyjobs.style";
+import styles from "./foodlist.style";
 import { COLORS } from "../../../constants";
 import NearbyJobCard from "../../common/cards/nearby/NearbyJobCard";
 import DropdownComponent from "./Dropdown";
 import useGenreFetch from "../../../hook/useGenreFetch";
 
 
-const Nearbyjobs = ( { cat, gen} ) => {
+const FoodList = ( ) => {
 
   const router = useRouter();
   const [genre, setGenre] = useState("Personal Growth")
+
+  const cat = "111111111111111111111111111";
+  const gen = "111";
 
   const handleGenreChange = (genre) => { // need to fix to call current endpoint, use params?
     setGenre(genre);
@@ -70,4 +73,4 @@ const Nearbyjobs = ( { cat, gen} ) => {
   );
 };
 
-export default Nearbyjobs;
+export default FoodList;

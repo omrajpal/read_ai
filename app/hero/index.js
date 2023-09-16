@@ -18,7 +18,7 @@ const Hero = () => {
   const router = useRouter();
 
   const handlePress = () => {
-    router.push("questionnare")
+    router.push("(drawer)/home")
   };
 
   return (
