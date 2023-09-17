@@ -32,18 +32,18 @@ const FoodModal = ( {food, onPress} ) => {
           }}
           onPress={onPress}
         >
-          <AntDesign name="close" size={24} color={COLORS.lightWhite} />
+          <AntDesign name="close" size={24} color={COLORS.primary} />
         </TouchableOpacity>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Text style={{ color: COLORS.lightWhite, fontSize: 20 }}>
+          <Text style={{ color: COLORS.primary, fontSize: 20 }}>
             How We Use Your Data
           </Text>
         </View>
-        <Text style={{ color: COLORS.lightWhite, marginTop: 10 }}>
+        <Text style={{ color: COLORS.primary, marginTop: 10 }}>
           ReadAI only asks the questions most relevant to maximize your
           self-improvement journey. To learn more visit our privacy policy{" "}
           <Text
-            style={{ color: COLORS.tertiary, textDecorationLine: "underline" }}
+            style={{ color: COLORS.primary, textDecorationLine: "underline" }}
             onPress={() =>
               Linking.openURL(
                 "https://www.termsfeed.com/live/9b007a78-2d35-4e2d-bf53-d8dd2c5af8d3"

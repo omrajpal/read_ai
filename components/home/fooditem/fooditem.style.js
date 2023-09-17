@@ -1,6 +1,6 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform } from "react-native";
 
-import { COLORS, SHADOWS, SIZES } from "../../../constants"
+import { COLORS, SHADOWS, SIZES } from "../../../constants";
 
 const styles = StyleSheet.create({
   container: {
@@ -9,10 +9,24 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     padding: SIZES.medium,
-    borderRadius: SIZES.small,
+    borderRadius: SIZES.medium,
     backgroundColor: "#FFF",
     ...SHADOWS.medium,
     shadowColor: COLORS.white,
+    marginBottom: SIZES.small,
+    // borderColor: COLORS.borderColor, // Add border color
+    // borderWidth: 1, // Add border width
+    ...Platform.select({
+      ios: {
+        shadowColor: "black",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 2,
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
   },
   logoContainer: {
     width: 50,

@@ -20,16 +20,12 @@ import {
 } from "expo-router";
 import * as SecureStore from "expo-secure-store";
 
-import { COLORS, icons, images, SIZES } from "../../../constants";
-import {
-  FoodList,
-  CameraButton,
-} from "../../../components";
+import { COLORS, icons, images, SIZES, FONT } from "../../../constants";
+import { FoodList, CameraButton } from "../../../components";
 import { Drawer } from "expo-router/drawer";
 import { DrawerToggleButton } from "@react-navigation/drawer";
 
 const Page = () => {
-
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
       <View>
@@ -51,9 +47,17 @@ const Page = () => {
             padding: SIZES.medium,
           }}
         >
-          <Text>NutritionAI</Text>
-          <CameraButton />
+          <Text
+            style={{
+              fontFamily: FONT.bold,
+              fontSize: SIZES.xxLarge,
+              color: COLORS.primary,
+            }}
+          >
+            NutritionAI
+          </Text>
           <FoodList />
+          <CameraButton />
         </View>
       </ScrollView>
     </SafeAreaView>
