@@ -38,6 +38,7 @@ export default class SwiperComponent extends Component {
       <Swiper style={styles.wrapper} showsButtons={false}>
         <Slide
           style={styles.slide1}
+          speed={0.4}
           heading={"Welcome to NutritionAI!"}
           lottieFile={require("./../../assets/lottie/food_bowl.json")}
           description={

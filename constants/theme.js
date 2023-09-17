@@ -1,13 +1,13 @@
 const COLORS = {
   primary: "#1b4965", // text
-  secondary: "#FAFAFC", // notch
-  tertiary: "#62b6cb", // camera button
+  secondary: "#FFFFFF", // notch
+  tertiary: "#bfe0f2", // camera button
 
   gray: "#83829A",
   gray2: "#C1C0C8",
 
   white: "#F3F4F8",
-  lightWhite: "#FAFAFC", // background
+  lightWhite: "#FFFFFF", // background
   borderColor: "#62b6cb", // Add border color
 
   // light blue bee9e8

@@ -1,18 +1,17 @@
-import React from 'react'
-import { View, TouchableOpacity, Text, Linking} from 'react-native';
+import React from "react";
+import { View, TouchableOpacity, Text, Linking, Image } from "react-native";
 import { COLORS } from "../../../../constants";
 import { AntDesign } from "@expo/vector-icons";
 
-const FoodModal = ( {food, onPress} ) => {
+const FoodModal = ({ food, onPress, thumbnail }) => {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <View
         style={{
           width: "85%",
-          backgroundColor: COLORS.secondary, // <-- set background color
+          backgroundColor: COLORS.secondary,
           padding: 40,
           borderRadius: 10,
-          // Add shadow style for iOS
           shadowColor: "#000",
           shadowOffset: {
             width: 0,
@@ -20,7 +19,6 @@ const FoodModal = ( {food, onPress} ) => {
           },
           shadowOpacity: 0.25,
           shadowRadius: 3.84,
-          // Add shadow style for Android
           elevation: 5,
         }}
       >
@@ -34,14 +32,34 @@ const FoodModal = ( {food, onPress} ) => {
         >
           <AntDesign name="close" size={24} color={COLORS.primary} />
         </TouchableOpacity>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Text style={{ color: COLORS.primary, fontSize: 20 }}>
-            How We Use Your Data
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <View>
+            <Image
+              source={
+                checkImageURL(thumbnail)
+                  ? { uri: thumbnail }
+                  : require("../../../../assets/images/nutrition_logo.png")
+              }
+              resizeMode="contain"
+              style={{
+                width: 100,
+                height: 100,
+              }}
+            />
+          </View>
+          <Text style={{ color: COLORS.primary, fontSize: 25 }}>{food.id}</Text>
+          <Text style={{ color: COLORS.primary, fontSize: 20, marginTop: 10 }}>
+            Calories: {food.calories}
           </Text>
         </View>
         <Text style={{ color: COLORS.primary, marginTop: 10 }}>
           ReadAI only asks the questions most relevant to maximize your
-          self-improvement journey. To learn more visit our privacy policy{" "}
+          self-improvement journey. To learn more, visit our privacy policy{" "}
           <Text
             style={{ color: COLORS.primary, textDecorationLine: "underline" }}
             onPress={() =>
@@ -57,6 +75,10 @@ const FoodModal = ( {food, onPress} ) => {
       </View>
     </View>
   );
-}
+};
+
+const checkImageURL = (url) => {
+  return url && url.startsWith("http");
+};
 
 export default FoodModal;

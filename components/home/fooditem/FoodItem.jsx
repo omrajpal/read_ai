@@ -30,14 +30,14 @@ const FoodItem = ( {food} ) => {
           setModalVisible(!modalVisible);
         }}
       >
-        <FoodModal food={food} onPress={onPress} />
+        <FoodModal food={food} onPress={onPress} thumbnail={food.thumbnail} />
       </Modal>
       <TouchableOpacity style={styles.logoContainer}>
         <Image
           source={
             checkImageURL(food.thumbnail)
               ? { uri: food.thumbnail }
-              : require("../../../assets/images/logo2.png")
+              : require("../../../assets/images/nutrition_logo.png")
           }
           resizeMode="contain"
           style={styles.logImage}

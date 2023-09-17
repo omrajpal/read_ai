@@ -1,6 +1,7 @@
 import { StyleSheet, Platform } from "react-native";
 
 import { COLORS, SHADOWS, SIZES } from "../../../constants";
+import { color } from "react-native-reanimated";
 
 const styles = StyleSheet.create({
   container: {
@@ -10,12 +11,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     padding: SIZES.medium,
     borderRadius: SIZES.medium,
-    backgroundColor: "#FFF",
+    backgroundColor: COLORS.tertiary,
     ...SHADOWS.medium,
     shadowColor: COLORS.white,
     marginBottom: SIZES.small,
-    // borderColor: COLORS.borderColor, // Add border color
-    // borderWidth: 1, // Add border width
     ...Platform.select({
       ios: {
         shadowColor: "black",
