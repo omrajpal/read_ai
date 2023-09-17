@@ -1,17 +1,20 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef} from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import Constants from 'expo-constants';
 import { Camera, CameraType } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library';
 import { MaterialIcons } from '@expo/vector-icons';
 import Button from '../../components/home/camera/custombutton/Button';
+import {useRouter} from 'expo-router'
 
-export default function App() {
+export default function CameraScreen() {
+    const router = useRouter();
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [image, setImage] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [flash, setFlash] = useState(Camera.Constants.FlashMode.off);
   const cameraRef = useRef(null);
+
 
   useEffect(() => {
     (async () => {
@@ -37,10 +40,10 @@ export default function App() {
     if (image) {
       try {
         const asset = await MediaLibrary.createAssetAsync(image);
-        // call API and then send it the file
         alert('Picture saved! 🎉');
         setImage(null);
         console.log('saved successfully');
+        router.push("(drawer)/home");
       } catch (error) {
         console.log(error);
       }

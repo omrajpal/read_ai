@@ -44,7 +44,6 @@ const Page = () => {
         />
       </View>
       <View style={{ flex: 1 }}>
-        <ScrollView showsVerticalScrollIndicator={false}>
           <View
             style={{
               flex: 1,
@@ -76,7 +75,6 @@ const Page = () => {
             />
             <FoodList />
           </View>
-        </ScrollView>
         <View style={styles.cameraButtonContainer}>
           <CameraButton />
         </View>

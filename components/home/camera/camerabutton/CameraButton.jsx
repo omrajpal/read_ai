@@ -10,6 +10,7 @@ const CameraButton = () => {
 
   return (
     <TouchableOpacity style={styles.buttonContainer} onPress={() => {
+        console.log("test")
         router.push("camera");
     }}>
       <Ionicons name="camera" size={28} color="white" style={styles.icon} />
