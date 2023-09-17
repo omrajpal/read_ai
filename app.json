@@ -15,6 +15,14 @@
       "bundler": "metro"
     },
     "name": "ReadAI",
+    "plugins":  [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera."
+        }
+      ]
+    ],
     "slug": "readai",
     "extra": {
       "eas": {
