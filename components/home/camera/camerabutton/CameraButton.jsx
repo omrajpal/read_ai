@@ -3,10 +3,15 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
 import { Ionicons } from "@expo/vector-icons"; // Import the Ionicons from @expo/vector-icons
 import { COLORS } from "../../../../constants";
+import { useRouter } from "expo-router";
 
 const CameraButton = () => {
+  const router = useRouter();
+
   return (
-    <TouchableOpacity style={styles.buttonContainer}>
+    <TouchableOpacity style={styles.buttonContainer} onPress={() => {
+        router.push("camera");
+    }}>
       <Ionicons name="camera" size={24} color="white" style={styles.icon} />
       <Text style={styles.buttonText}>
         Take a picture of your item
