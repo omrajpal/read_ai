@@ -27,7 +27,7 @@ const data = {
           amountEaten: 10.5,
         },
         {
-          id: "Bannana",
+          id: "Banana",
           calories: 70,
           thumbnail:
             "https://t4.ftcdn.net/jpg/05/05/61/73/360_F_505617309_NN1CW7diNmGXJfMicpY9eXHKV4sqzO5H.jpg",
@@ -53,7 +53,7 @@ const data = {
           amountEaten: 1,
         },
         {
-          id: "Bannana",
+          id: "Banana",
           calories: 70,
           thumbnail:
             "https://t4.ftcdn.net/jpg/05/05/61/73/360_F_505617309_NN1CW7diNmGXJfMicpY9eXHKV4sqzO5H.jpg",
@@ -90,6 +90,26 @@ const data = {
   ]
 };
 
+const formatDate = (dateStr) => {
+  const [month, day, year] = dateStr.split("-").map(Number);
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  const formattedDate = `${months[month - 1]} ${day}, 20${year}`;
+  return formattedDate;
+};
+
 const FoodList = () => {
 
   // const { data, isLoading, error } = useFetch("/getBooks/top", {});
@@ -109,7 +129,7 @@ const FoodList = () => {
             <FlatList
               data={data.items}
               renderItem={({ item }) => (
-                <Date date={item.date} data={item.data} />
+                <Date date={formatDate(item.date)} data={item.data} />
               )}
               keyExtractor={(item) => item.date}
               contentContainerStyle={{ columnGap: SIZES.medium }}

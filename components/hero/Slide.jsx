@@ -4,36 +4,40 @@ import { Text, View, StyleSheet} from 'react-native';
 import LottieView from 'lottie-react-native';
 import { COLORS } from '../../constants';
 
-const Slide = ( { heading, lottieFile, description}) => {
+const Slide = ( { heading, speed, lottieFile, description, size, doesLoop}) => {
+
+  const slideSize = size || 375;
+  const setSpeed = speed || 1;
   return (
     <View>
-    <Text style={styles.baseText}>{heading}</Text>
-    <LottieView
+      <Text style={styles.baseText}>{heading}</Text>
+      <LottieView
         autoPlay
-        loop
+        loop={doesLoop}
+        speed={setSpeed}
         style={{
-          width: 375,
-          height: 375,
-          backgroundColor: '#ffffff',
-          alignContent: 'center',
+          width: slideSize,
+          height: slideSize,
+          backgroundColor: "#ffffff",
+          alignContent: "center",
         }}
         source={lottieFile}
       />
       <Text style={styles.lowerText}>{description}</Text>
-      </View>
-  )
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
   baseText: {
     fontWeight: 'bold',
-    fontSize: 30,
+    fontSize: 35,
     color: COLORS.primary,
     paddingLeft: 10,
     paddingTop: 10,
   },
   lowerText: {
-    fontSize: 20,
+    fontSize: 28,
     color: COLORS.primary,
     paddingLeft: 10,
     paddingTop: 10,

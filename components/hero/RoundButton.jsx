@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
-import { COLORS } from '../../constants';
+import { COLORS, SHADOWS } from '../../constants';
 
 const RoundButton = ({ onPress }) => {
   return (
@@ -12,16 +12,29 @@ const RoundButton = ({ onPress }) => {
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    backgroundColor: COLORS.tertiary,
+    backgroundColor: COLORS.primary,
     borderRadius: 25, // Rounded corners to make it pill-shaped
     paddingHorizontal: 20,
     paddingVertical: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
+    ...SHADOWS.medium,
+    shadowColor: COLORS.white,
+    ...Platform.select({
+      ios: {
+        shadowColor: "black",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 2,
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
   },
   buttonText: {
     color: COLORS.lightWhite,
-    fontSize: 16,
+    fontSize: 20,
   },
 });
 

@@ -14,7 +14,7 @@
     "web": {
       "bundler": "metro"
     },
-    "name": "ReadAI",
+    "name": "NutritionAI",
     "plugins":  [
       [
         "expo-camera",
@@ -23,7 +23,7 @@
         }
       ]
     ],
-    "slug": "readai",
+    "slug": "NutritionAI",
     "extra": {
       "eas": {
         "projectId": "b8d8bacc-2b56-44fe-909a-419ec3f1819a"
@@ -34,6 +34,6 @@
       "package": "com.asaravan.readai",
       "versionCode": 3
     },
-    "icon": "assets/images/logo2.png"
+    "icon": "assets/images/nutrition_logo.png"
   }
 }

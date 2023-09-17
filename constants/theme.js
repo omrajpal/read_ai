@@ -1,17 +1,19 @@
 const COLORS = {
   primary: "#1b4965", // text
-  secondary: "#bee9e8", // notch
-  tertiary: "#62b6cb", // camera button
+  secondary: "#FFFFFF", // notch
+  tertiary: "#bfe0f2", // camera button
 
   gray: "#83829A",
   gray2: "#C1C0C8",
 
   white: "#F3F4F8",
-  lightWhite: "#FAFAFC", // background
+  lightWhite: "#FFFFFF", // background
+  borderColor: "#62b6cb", // Add border color
 
   // light blue bee9e8
   // aqua blue 62b6cb
   // dark blue 1b4965
+  // lightWhite FAFAFC
 
   // primary: "#1b4965",
   // secondary: "#bee9e8", // #444262
@@ -33,10 +35,10 @@ const FONT = {
 const SIZES = {
   xSmall: 10,
   small: 12,
-  medium: 16,
-  large: 20,
-  xLarge: 24,
-  xxLarge: 32,
+  medium: 18,
+  large: 25,
+  xLarge: 30,
+  xxLarge: 42,
 };
 
 const SHADOWS = {
