@@ -40,10 +40,7 @@ const FoodModal = ({ food, onPress, thumbnail }) => {
         >
           <View>
             <Image
-              source={
-                checkImageURL(thumbnail)
-                  ? { uri: thumbnail }
-                  : require("../../../../assets/images/nutrition_logo.png")
+              source={require("../../../../assets/images/nutrition_logo.png")
               }
               resizeMode="contain"
               style={{
@@ -56,22 +53,19 @@ const FoodModal = ({ food, onPress, thumbnail }) => {
           <Text style={{ color: COLORS.primary, fontSize: 20, marginTop: 10 }}>
             Calories: {food.calories}
           </Text>
-        </View>
-        <Text style={{ color: COLORS.primary, marginTop: 10 }}>
-          ReadAI only asks the questions most relevant to maximize your
-          self-improvement journey. To learn more, visit our privacy policy{" "}
-          <Text
-            style={{ color: COLORS.primary, textDecorationLine: "underline" }}
-            onPress={() =>
-              Linking.openURL(
-                "https://www.termsfeed.com/live/9b007a78-2d35-4e2d-bf53-d8dd2c5af8d3"
-              )
-            }
-          >
-            here
+          <Text style={{ color: COLORS.primary, fontSize: 20, marginTop: 10 }}>
+            Amount Eaten: {food.amountEaten} liters
           </Text>
-          .
-        </Text>
+          <Text style={{ color: COLORS.primary, fontSize: 20, marginTop: 10 }}>
+            Protien: 15.0 g
+          </Text>
+          <Text style={{ color: COLORS.primary, fontSize: 20, marginTop: 10 }}>
+            Carbohydrates: 2.1 g
+          </Text>
+          <Text style={{ color: COLORS.primary, fontSize: 20, marginTop: 10 }}>
+            Sugar: 7.0 g
+          </Text>
+        </View>
       </View>
     </View>
   );

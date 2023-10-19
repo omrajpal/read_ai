@@ -1,10 +1,12 @@
 import React from "react";
 import { useRouter } from "expo-router";
 import { View, Text, TouchableOpacity, ActivityIndicator, FlatList } from "react-native";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import TextTicker from "react-native-text-ticker";
+import Slide from "../../hero/Slide";
 
 import styles from "./foodlist.style";
-import { COLORS, SIZES } from "../../../constants";
+import { COLORS, SIZES, FONT } from "../../../constants";
 import Date from "../date/Date";
 
 const data = {
@@ -112,10 +114,29 @@ const formatDate = (dateStr) => {
 
 const FoodList = () => {
 
-  // const { data, isLoading, error } = useFetch("/getBooks/top", {});
+  const [title, setTitle] = useState(""); // State for the animated title
+  const titleRef = useRef(null);
 
   const isLoading = false;
   const error = false;
+
+useEffect(() => {
+  // Simulate a typing animation by updating the title character by character
+  const targetTitle = "NutritionAI";
+  let currentIndex = 0;
+  const typingInterval = setInterval(() => {
+    if (currentIndex < targetTitle.length) {
+      setTitle(targetTitle.slice(0, currentIndex + 1));
+      currentIndex++;
+    } else {
+      clearInterval(typingInterval);
+    }
+  }, 200); // Adjust the typing speed as needed
+  return () => {
+    clearInterval(typingInterval);
+  };
+}, []);
+
 
   return (
     <View style={styles.container}>
@@ -134,6 +155,31 @@ const FoodList = () => {
               keyExtractor={(item) => item.date}
               contentContainerStyle={{ columnGap: SIZES.medium }}
               vertical
+              ListHeaderComponent={
+                <View>
+                  <TextTicker
+                ref={titleRef}
+                style={{
+                  fontFamily: FONT.bold,
+                  fontSize: SIZES.xxLarge,
+                  color: COLORS.primary,
+                }}
+                duration={4000} // Adjust the duration for animation speed
+                loop
+                bounce
+                repeatSpacer={50}
+                marqueeDelay={1000}
+              >
+                {title}
+              </TextTicker>
+              <Slide
+                doesLoop={false}
+                style={styles.slide4}
+                lottieFile={require("./../../../assets/lottie/diet_plan")}
+                size={200}
+              />
+            </View>
+              }
             />
           </View>
         )}
