@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {StyleSheet, Text, View, Button } from 'react-native'
+import {StyleSheet } from 'react-native'
 
 import Swiper from 'react-native-swiper'
 import Slide from './Slide'
@@ -41,7 +41,7 @@ export default class SwiperComponent extends Component {
           description={"Let our AI tools do the dirty work -- while you read the most optimal books."}
         />
          <Slide style={styles.slide2}
-          heading={"Build a better system."}
+          heading={"Find the answers you have been looking for."}
           lottieFile={ require("./../../assets/lottie/read.json")}
           description={"With hundreds of books to choose from, ReadAI can find the ones necessary for your journey."}
         />

@@ -5,85 +5,62 @@ import { COLORS, icons, images, SIZES } from "../../../constants";
 import useFetch from "../../../hook/useFetch";
 import styles from "../../../styles/search";
 import { useRouter} from "expo-router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import NearbyJobCard from "../../../components/common/cards/nearby/NearbyJobCard";
-import { Ionicons } from '@expo/vector-icons'; // Import the Ionicons from @expo/vector-icons
-import * as SecureStore from 'expo-secure-store';
+import { Ionicons } from '@expo/vector-icons';
+
+import {fetchLocalData} from "../../../hook/storageHelpers"
 
 export default function FavoritesPage() {
-
   const router = useRouter();
-
-  const [favorites, setFavorites] = useState([]);
+  
   const [isLoading, setIsLoading] = useState(true);
-  const [cat, setCat] = useState("");
-  const [gen, setGen] = useState("");
   const [refreshing, setRefreshing] = useState(false);
 
+  const [favoriteIds, setFavoriteIds] = useState([]);
 
-  // TESTING
-  const testData = false;
+  const [cat, setCat] = useState("");
+  const [gen, setGen] = useState("");
 
-  async function save(key, value) { // only used for test cases
-      await SecureStore.setItemAsync(key, value);
-  }
-
-  if (testData) {
-    save("favorites", "uNMjeFMorPgC Xh2rEAAAQBAJ R2cqDAAAQBAJ"); // if we would just like to see app working
-  }
-  // TESTING
-
-
-  async function getValueFor(key) { // used to get current favorites
-    let result = await SecureStore.getItemAsync(key);
-    return result;
-  }
-
-  const loadFavorites = () => {
-    getValueFor("favorites")
-      .then((rawData) => {
-        setFavorites(rawData ? rawData.split(" ") : []);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error("An error occurred:", error);
-        setIsLoading(false);
-      });
-  };
-
-  const loadData = () => {
+  const onRefresh = useCallback(() => {
     setRefreshing(true);
-    // Fetch favorites
-    loadFavorites();
+    refetch() // do not need to refetch data, but favoriteIds!
+    initializeData();
     setRefreshing(false);
-  };
-
-  useEffect(() => {
-    // Assuming `yourPromiseFunction` is the function that returns your Promise
-    getValueFor("data")
-    .then((value) => {
-        const data = value.split("*")[1];
-        setCat(data.substring(0,24));
-        setGen(data.substring(24))
-        setIsLoading(false);
-    })
-    .catch((error) => {
-        console.error("An error occurred:", error);
-        setIsLoading(false);
-    });
-
-     // Fetch favorites initially
-     loadFavorites();
   }, []);
+
+  // Hooks
+
+  const { data, isLoading: apiIsLoading, error, refetch } = useFetch('/getBooks', { cat, gen });
   
-  const { data, apiIsLoading, error } = useFetch("/getBooks", {
-    cat: cat,
-    gen: gen,
-  });
-  
+
+  // Load initial data and set states
+  const initializeData = useCallback(async () => {
+    try {
+      // Fetch UUID and local data
+      const uuid = await fetchLocalData("uuidv4"); // dont need uuid4 because using locally
+      const localData = await fetchLocalData(uuid); // Adjust this if fetchLocalData doesn't need uuid
+
+      // Set local data states
+      setFavoriteIds(localData.favorites);
+      setCat(localData.cat);
+      setGen(localData.gen);
+
+    } catch (error) {
+      console.error("An error occurred while initializing data:", error);
+      // Optionally set an error state to display an error message to the user
+    }
+  }, []); // If you use any external values in this function, they should be added to the dependency array
+
   useEffect(() => {
-    setIsLoading(apiIsLoading);
-  }, [apiIsLoading]);
+    initializeData();
+  }, [initializeData]); // Run this effect when the component mounts
+
+  useEffect(() => {
+    if (data?.length != 0) {
+      setIsLoading(false); // Set loading to false since data is loaded
+    }
+  }, [apiIsLoading]); // This effect runs whenever the loading state or data from the API changes
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
@@ -96,7 +73,7 @@ export default function FavoritesPage() {
         }}
       />
       <FlatList
-        data={data.filter((item) => favorites.includes(item.id))}
+        data={data.filter((item) => favoriteIds?.includes(item.id))}
         renderItem={({ item }) => (
           <NearbyJobCard
             book={item}
@@ -110,9 +87,9 @@ export default function FavoritesPage() {
         )}
         keyExtractor={(book) => book.id}
         refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={loadData} />
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
-        contentContainerStyle={{ padding: SIZES.medium }}
+        contentContainerStyle={{ rowGap: SIZES.medium, padding: SIZES.medium}}
         ListHeaderComponent={() => (
           <>
             <View style={styles.container}>

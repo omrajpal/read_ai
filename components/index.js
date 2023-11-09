@@ -1,4 +1,3 @@
-import ScreenHeaderBtn from "./common/header/ScreenHeaderBtn";
 
 // home screen
 import Welcome from "./home/welcome/Welcome";
@@ -10,14 +9,17 @@ import Question from "./home/question/Question";
 import Book from "./bookdetails/book/Book";
 import { default as JobTabs } from "./bookdetails/tabs/Tabs";
 import { default as JobFooter } from "./bookdetails/footer/Footer";
+import SimilarBooks from "./bookdetails/similar/SimilarBooks";
 
 //hero
 import SwiperComponent from "./hero/Hero";
 
+import InfoModal from "./infomodal/InfoModal";
+import UpdateModal from "./updatemodal/UpdateModal";
+
 
 
 export {
-  ScreenHeaderBtn,
   Welcome,
   Nearbyjobs,
   Popularjobs,
@@ -26,4 +28,7 @@ export {
   JobFooter,
   Question,
   SwiperComponent,
+  SimilarBooks,
+  InfoModal,
+  UpdateModal
 };

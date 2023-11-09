@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { StyleSheet, Button, ScrollView, Text, TextInput, View, ActivityIndicator } from 'react-native';
 import { QCOLORS } from '../question/res/validColors';
 import {ButtonOutline, ButtonSolid} from 'react-native-ui-buttons';
-import { Icon } from 'react-native-vector-icons/MaterialIcons';
-import useFetch from '../../../hook/useFetch';
-import * as SecureStore from 'expo-secure-store';
+
 import { COLORS, FONT, SIZES } from '../../../constants';
 import Header from './Header';
 import { SimpleSurvey } from './SimpleSurvey';
+
+import { fetchLocalData, updateUser } from '../../../hook/storageHelpers';
 
 const GREEN = 'rgba(141,196,63,1)';
 const PURPLE = 'rgba(108,48,237,1)';
@@ -28,13 +28,6 @@ const topics = ["Welcome", "Intro", "Name",
     'General', 'General', 'General', 'General', 
     'Thank You'
  ]
-
-
-
-
-async function save(key, value) {
-    await SecureStore.setItemAsync(key, value);
-}
 
 
 export default class SurveyScreen extends Component {
@@ -88,18 +81,28 @@ export default class SurveyScreen extends Component {
         const name = answers[0].value
         let data = "";
         for (const elem of answers.slice(1)) { data = data.concat(elem.value.value); }
-        save("data", `${name}*${data.substring(0, 24)}${data.substring(24)}`);
-        this.props.router.push("(drawer)/home");
-
-        // const infoQuestionsRemoved = [...answers];
-
-        // // Convert from an array to a proper object. This won't work if you have duplicate questionIds
-        // const answersAsObj = {};
-        // for (const elem of infoQuestionsRemoved) { answersAsObj[elem.questionId] = elem.value; }
-        // console.log(answersAsObj);
-        // const data = answersAsObj.join("");
-
         
+        fetchLocalData("uuidv4")
+        .then((uuidv4) => {
+            // Construct the updates object
+            const updates = {
+                "name" : name,
+                "cat" : data.substring(0, 24),
+                "gen" : data.substring(24)
+            };
+            
+            // Update all fields in a single call
+            return updateUser(uuidv4, updates);
+        })
+        .then(() => {
+            console.log(`User (${name}) has finished survey and data (${data}) is now updated`);
+        })
+        .catch(error => {
+            console.error("Error updating user data:", error);
+        });
+        this.props.router.push({
+            pathname: "(drawer)/home",
+          });
     }
 
     /**
