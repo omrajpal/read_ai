@@ -1,16 +1,15 @@
 import React from 'react'
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
-import { Heading, Image} from "@gluestack-ui/themed"
+import {StyleSheet, View, TouchableOpacity, Image} from 'react-native';
 import { COLORS } from '../../../constants';
 
 const BookIcon = ({imgUri}) => {
   return (
     <TouchableOpacity>
       <Image
-        size="lg"
-        borderRadius="$xl"
+        height={100}
+        width={100}
         source={{uri: imgUri}}
-        alt="Image of Book Logo"
+        style={{borderRadius: 20}}
       />
     </TouchableOpacity>
   )

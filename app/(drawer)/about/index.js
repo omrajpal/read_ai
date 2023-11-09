@@ -1,10 +1,10 @@
 import React from 'react';
-import { Text, View, StyleSheet, ScrollView, Linking, TouchableOpacity, SafeAreaView } from "react-native";
+import { Text, View, StyleSheet, ScrollView, Linking, TouchableOpacity, SafeAreaView, Image} from "react-native";
 import { Drawer } from "expo-router/drawer";
 import { DrawerToggleButton } from '@react-navigation/drawer';
 import { COLORS, FONT, SIZES } from '../../../constants';
 
-import { GluestackUIProvider, Avatar, AvatarFallbackText, AvatarImage, Image, ButtonIcon, ButtonText, Button, MailIcon} from "@gluestack-ui/themed";
+import { GluestackUIProvider, ButtonIcon, ButtonText, Button, MailIcon} from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
 
 // const AnimatedIcon = Animatable.createAnimatableComponent(Icon);
@@ -34,12 +34,9 @@ const AboutPage = () => {
           }}
         >
       <Text style={styles.title}>About Us</Text>
-      <Image
-        size="xl"
-        borderRadius="$xl"
-        source={require('../../../assets/icon.png')}
-        alt="Image of Book Logo"
-      />
+      <Image style={{ flex: 1, width: 200, height: 200, borderRadius: 50, resizeMode: "contain" }} source={require("../../../assets/images/logo.png")}></Image>
+
+      
       <View>
       
       </View>
@@ -60,13 +57,12 @@ const AboutPage = () => {
 
       {/* Om Rajpal Section */}
       <View style={styles.section}>
-      <Avatar bgColor='$amber600' size="xl" borderRadius="$full" >
-          <AvatarFallbackText>Om Rajpal</AvatarFallbackText>
-          <AvatarImage 
-            source={{uri: "https://media.licdn.com/dms/image/D5603AQFJw56MFvFpZQ/profile-displayphoto-shrink_400_400/0/1668276234691?e=1703721600&v=beta&t=cCRIwHDY9Rjgp8XSajZOKWK_UQ8UxJTD-dDyFlHeIeI"}}
-            alt="Image of Book Logo"
-          />
-      </Avatar>
+      <Image
+        height={100}
+        width={100}
+        source={{uri: "https://media.licdn.com/dms/image/D5603AQFJw56MFvFpZQ/profile-displayphoto-shrink_400_400/0/1668276234691?e=1703721600&v=beta&t=cCRIwHDY9Rjgp8XSajZOKWK_UQ8UxJTD-dDyFlHeIeI"}}
+        style={{borderRadius: 50}}
+      />
       <View>
         <Text style={styles.subtitle}>Om Rajpal</Text>
       </View>
@@ -87,13 +83,12 @@ const AboutPage = () => {
 
       {/* Ashok Saravanan Section */}
       <View style={styles.section}>
-      <Avatar bgColor='$amber600' size="xl" borderRadius="$full" >
-          <AvatarFallbackText>Ashok Saravanan</AvatarFallbackText>
-          <AvatarImage 
-            source={{uri: "https://media.licdn.com/dms/image/D5603AQGCf7AoRM6K3w/profile-displayphoto-shrink_400_400/0/1693908631125?e=1704326400&v=beta&t=O_jvlCX0ldLJWm3-c4buGZ7RUuvftAUL7EmXaB2xc-Y"}}
-            alt="Image of Book Logo"
-          />
-      </Avatar>
+      <Image
+        height={100}
+        width={100}
+        source={{uri: "https://media.licdn.com/dms/image/D5603AQGCf7AoRM6K3w/profile-displayphoto-shrink_400_400/0/1693908631125?e=1704326400&v=beta&t=O_jvlCX0ldLJWm3-c4buGZ7RUuvftAUL7EmXaB2xc-Y"}}
+        style={{borderRadius: 50}}
+      />
         <Text style={styles.subtitle}>Ashok Saravanan</Text>
         <View style={styles.profileContainer}>
           <Text style={styles.text}>
