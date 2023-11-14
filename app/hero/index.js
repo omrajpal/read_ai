@@ -21,7 +21,7 @@ const Hero = () => {
   const router = useRouter();
 
   const data = useLocalSearchParams();
-  const { legacyUser, initialUpdates } = data;
+  const {legacyUser, initialUpdates } = data;
 
   const handlePress = () => {
     // Create new uuidv4 when user is done with hero page
@@ -64,7 +64,7 @@ const Hero = () => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
-        <Drawer.Screen
+      <Drawer.Screen
         options={{
           headerStyle: { backgroundColor: COLORS.tertiary },
           headerShadowVisible: false,
@@ -76,9 +76,9 @@ const Hero = () => {
             flex: 1,
             padding: SIZES.medium,
           }}
-        >
-      <SwiperComponent/>
-      <RoundButton onPress={handlePress} />
+      >
+      <SwiperComponent legacyUser={legacyUser}/>
+      <RoundButton onPress={handlePress} legacyUser={legacyUser}/>
       </View>
     </SafeAreaView>
   );

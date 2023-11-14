@@ -2,10 +2,10 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { COLORS } from '../../constants';
 
-const RoundButton = ({ onPress }) => {
+const RoundButton = ({ onPress, legacyUser }) => {
   return (
     <TouchableOpacity style={styles.buttonContainer} onPress={onPress}>
-      <Text style={styles.buttonText}>Get Started</Text>
+      <Text style={styles.buttonText}>{legacyUser === true ? "Jump back in!" : "Get Started"}</Text>
     </TouchableOpacity>
   );
 };
