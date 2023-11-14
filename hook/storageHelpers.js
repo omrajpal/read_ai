@@ -1,5 +1,4 @@
 // storageHelpers.js
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as SecureStore from 'expo-secure-store';
 
 const API_ENDPOINT = "https://5fkjvn2s62.execute-api.us-east-2.amazonaws.com/default/userData";  // Replace this with your API endpoint
@@ -7,10 +6,10 @@ const API_ENDPOINT = "https://5fkjvn2s62.execute-api.us-east-2.amazonaws.com/def
 // Get the user data from AsyncStorage
 export const fetchLocalData = async (key) => {
     try {
-        const jsonData = await AsyncStorage.getItem(key);
+        const jsonData = await SecureStore.getItemAsync(key);
         return jsonData ? JSON.parse(jsonData) : null;
     } catch (error) {
-        console.error("Error fetching data from AsyncStorage", error);
+        console.error("Error fetching data from SecureStore", error);
         return null;
     }
 }
@@ -18,7 +17,7 @@ export const fetchLocalData = async (key) => {
 // Save user data to AsyncStorage
 export const saveLocalData = async (key, data) => {
     try {
-        await AsyncStorage.setItem(key, JSON.stringify(data));
+        await SecureStore.setItemAsync(key, JSON.stringify(data));
         console.log(JSON.stringify(data));
     } catch (error) {
         console.error("Error saving data to AsyncStorage", error);
@@ -28,7 +27,7 @@ export const saveLocalData = async (key, data) => {
 // Remove user data from AsyncStorage
 const clearLocalData = async (key) => {
     try {
-        await AsyncStorage.removeItem(key);
+        await SecureStore.deleteItemAsync(key);
     } catch (error) {
         console.error("Error clearing data from AsyncStorage", error);
     }
