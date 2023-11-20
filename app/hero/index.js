@@ -27,7 +27,7 @@ const Hero = () => {
     // Create new uuidv4 when user is done with hero page
 
     const uuidv4 = uuid.v4();
-    console.log(`Deteced new user, created uuid: ${uuidv4}`)
+    console.log(`Created uuid: ${uuidv4}`)
 
     const updates = {
       "key" : uuidv4,
@@ -44,7 +44,7 @@ const Hero = () => {
       }
     }
     console.log(`legacyUser status: ${legacyUser}`);
-    if (legacyUser === true) {
+    if (legacyUser == true) {
       migrateData(uuidv4, updates)
       .then(() => {
         console.log("Migrated legacy user to new database.")

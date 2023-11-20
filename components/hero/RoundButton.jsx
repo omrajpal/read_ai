@@ -5,7 +5,7 @@ import { COLORS } from '../../constants';
 const RoundButton = ({ onPress, legacyUser }) => {
   return (
     <TouchableOpacity style={styles.buttonContainer} onPress={onPress}>
-      <Text style={styles.buttonText}>{legacyUser === true ? "Jump back in!" : "Get Started"}</Text>
+      <Text style={styles.buttonText}>{legacyUser == true ? "Jump back in!" : "Get Started"}</Text>
     </TouchableOpacity>
   );
 };

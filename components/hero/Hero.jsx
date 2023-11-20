@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
 export default class SwiperComponent extends Component {
 
   render() {
-    if (this.props.legacyUser === true) {
+    if (this.props.legacyUser == true) {
       return (
         <Swiper style={styles.wrapper} showsButtons={false}>
           <Slide style={styles.slide1}
