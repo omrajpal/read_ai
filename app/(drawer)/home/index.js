@@ -15,7 +15,7 @@ import { MaterialIcons, AntDesign, Feather } from '@expo/vector-icons';
 
 import { useFocusEffect } from "expo-router";
 
-import {fetchLocalData, legacyUser} from "../../../hook/storageHelpers"
+import {fetchLocalData } from "../../../hook/storageHelpers"
 
 const Page = () => {
   const router = useRouter();
@@ -27,43 +27,22 @@ const Page = () => {
   const [cat, setCat] = useState("");
   const [gen, setGen] = useState("");
 
-  const [updates, setUpdates] = useState(null);
-
   useFocusEffect(() => {
-    // will remove this code once all users are migrated
-    legacyUser()
-    .then((promiseValue) => { // checking if data needs to be migrated
-      setUpdates(promiseValue);
-      return (promiseValue != null)
+    fetchLocalData("uuidv4") // if null go to hero
+    .then((uuidv4) => {
+        if (uuidv4 == null) {
+          router.push("hero");
+        } else {
+            fetchLocalData(uuidv4)
+            .then((data) => {
+              setName(data.name);
+              setCat(data.cat);
+              setGen(data.gen);
+              setIsLoading(false);
+            })
+        }
     })
-    .then((isLegacyUser) => {
-      if (isLegacyUser) {
-        console.log("Deteced legacy user, pushing to updates to hero page.")
-        router.push({
-          pathname: "hero",
-          params: {legacyUser: true, updates: updates}
-        });
-      } else {
-        fetchLocalData("uuidv4") // original logic, if null go to hero
-        .then((uuidv4) => {
-            if (uuidv4 == null) {
-              router.push({
-                pathname: "hero",
-                params: {legacyUser: false, updates: null}
-              });
-            } else {
-                fetchLocalData(uuidv4)
-                .then((data) => {
-                  setName(data.name);
-                  setCat(data.cat);
-                  setGen(data.gen);
-                  setIsLoading(false);
-                })
-            }
-        })
-      }
-    })
-  },);
+    });
 
     return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>

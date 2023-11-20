@@ -20,21 +20,17 @@ import { updateUser, saveLocalData, migrateData } from '../../hook/storageHelper
 const Hero = () => {
   const router = useRouter();
 
-  const data = useLocalSearchParams();
-  const {legacyUser, initialUpdates } = data;
-
   const handlePress = () => {
     // Create new uuidv4 when user is done with hero page
-
     const uuidv4 = uuid.v4();
     console.log(`Created uuid: ${uuidv4}`)
-
+    
     const updates = {
       "key" : uuidv4,
-      "name" : initialUpdates?.name ?? "",
-      "cat" : initialUpdates?.cat ?? "",
-      "gen" : initialUpdates?.gen ?? "",
-      "favorites" : initialUpdates?.favorites ?? [],
+      "name" : "",
+      "cat" : "",
+      "gen" : "",
+      "favorites" : [],
       "booksRead" : [],
       "booksReading" : [],
       "booksOpened" : 0,
@@ -43,21 +39,14 @@ const Hero = () => {
         "v1.1" : false
       }
     }
-    console.log(`legacyUser status: ${legacyUser}`);
-    if (legacyUser == true) {
-      migrateData(uuidv4, updates)
+
+    updateUser(uuidv4, updates) // initializing user
+    .then(() => {
+      saveLocalData("uuidv4", uuidv4)
       .then(() => {
-        console.log("Migrated legacy user to new database.")
+        console.log(`Saved uuid locally: ${uuidv4}`);
       })
-    } else {
-      updateUser(uuidv4, updates) // initializing user
-      .then(() => {
-        saveLocalData("uuidv4", uuidv4)
-        .then(() => {
-          console.log(`Saved uuid locally: ${uuidv4}`);
-        })
-      })
-    }
+    })
     
     router.push("questionnare");
   };
@@ -77,8 +66,8 @@ const Hero = () => {
             padding: SIZES.medium,
           }}
       >
-      <SwiperComponent legacyUser={legacyUser}/>
-      <RoundButton onPress={handlePress} legacyUser={legacyUser}/>
+      <SwiperComponent/>
+      <RoundButton onPress={handlePress}/>
       </View>
     </SafeAreaView>
   );
