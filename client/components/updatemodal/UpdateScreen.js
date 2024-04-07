@@ -3,9 +3,9 @@ import { StyleSheet, Button, ScrollView, Text, TextInput, View, ActivityIndicato
 import { QCOLORS } from '../question/res/validColors';
 import {ButtonOutline, ButtonSolid} from 'react-native-ui-buttons';
 import { Icon } from 'react-native-vector-icons/MaterialIcons';
-import useFetch from '../../../hook/useFetch';
+import useFetch from '../../hook/useFetch';
 import * as SecureStore from 'expo-secure-store';
-import { COLORS, FONT, SIZES } from '../../../constants';
+import { COLORS, FONT, SIZES } from '../../constants';
 import Header from './Header';
 import { SimpleSurvey } from './SimpleSurvey';
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Button, ScrollView, Text, TextInput, View, ActivityIndicator } from 'react-native';
-import { QCOLORS } from '../question/res/validColors';
+import { QCOLORS } from './res/validColors';
 import {ButtonOutline, ButtonSolid} from 'react-native-ui-buttons';
 
 import { COLORS, FONT, SIZES } from '../../../constants';
