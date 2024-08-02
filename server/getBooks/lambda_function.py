@@ -140,13 +140,13 @@ def lambda_handler(event, context):
         book_id = pathParameters.get('id')
         genre = pathParameters.get('genre')
         
-        if book_id:
+        if book_id: # getBookById()
             for book in books: # finding book with specified id
                 if book['id'] == book_id:
                     book_with_id = book
                     break
             
-            if 'similar' in rawPath: # Similar Books
+            if 'similar' in rawPath: # getSimilarBooks()
                 newBooks = []
                 genre_index = random.choice(range(len(book_with_id["weights"])))
                 for book in books:
@@ -165,7 +165,7 @@ def lambda_handler(event, context):
             else: # Book Details
                 books = [book_with_id]
         
-        if genre:
+        if genre: # getBooksbyGenre()
             newBooks = []
             for book in books:
                 for weight in book["weights"]:
@@ -195,60 +195,10 @@ def lambda_handler(event, context):
         
         del book['weights']
         
-
-    # header = ['Genre', 'Title', 'Author', 'Score']
-
-    # genres = ['Personal Growth', 'Leadership/Management', 'Creativity', 'Finance/Wealth', 'Communication/Relationships', 'Health/Wellness', 'Mindfulness', 'Spirituality']
-    
-    # # create CSV writer in memory
-    # output = StringIO()
-    # writer = csv.writer(output)
-    # writer.writerow(header)
-
-    # s3 client to access files
-    # s3 = boto3.client('s3', region_name='us-east-2') # adjust the region name as necessary
-
-    # for idx, genre in enumerate(genres):
-    #     wgts = []
-
-    #     for char in my_cat_data[3*idx:3*(idx+1)]:
-    #         wgts.append(cat_weights[int(char) - 1])
-
-    #     for char in my_gen_data:
-    #         wgts.append(gen_weights[int(char) - 1])
-
-    #     # download and load CSV data from S3
-    #     genre_file = re.sub('[^0-9a-zA-Z]+', ' ', genre) + '.csv'
-    #     obj = s3.get_object(Bucket='readaibucket', Key=genre_file) # replace 'your-bucket-name' with your S3 bucket name
-    #     data = [row for row in csv.DictReader(obj['Body'].read().decode('utf-8').splitlines())]
-
-    #     rmse = []
-    #     for row in data:
-    #         true = [float(val) for val in list(row.values())[2:]]
-    #         rmse.append(mean_squared_error(true, wgts))
-
-    #     sig = [sigmoid(max(rmse)-(2*x))+0.2 for x in rmse]
-
-    #     for row, value in zip(data, sig):
-    #         row['sig'] = value
-
-    #     data.sort(key=lambda x: x['sig'], reverse=True)
-
-    #     for row in data:
-    #         writer.writerow([genre, row["Title"], row["Author"], f'{format(row["sig"] * 100, ".2f")}%'])
-    
-    # output.seek(0)
-    # results = output.getvalue().strip().split('\n')
-    # csv_as_json = [dict(zip(header, result.split(','))) for result in results[1:]]
-    
-    # return {"items" : csv_as_json}
-
-    # return list(books)
-
     books = sorted(books, key=lambda k: k['score'], reverse=True)
     # Handling top
     
-    if rawPath == "/default/getBooks/top":
+    if rawPath == "/default/getBooks/top": # getTopBooks()
         genres = []
         newBooks = []
         for book in books:
@@ -268,4 +218,4 @@ def lambda_handler(event, context):
             ids.append(book["id"])
             newBooks.append(book) # adding the books not currenlty in to newBooks
     
-    return list(newBooks)
+    return list(newBooks) # getAllBooks()

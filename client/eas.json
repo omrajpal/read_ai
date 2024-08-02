@@ -3,14 +3,24 @@
     "version": ">= 5.6.0"
   },
   "build": {
-    "development": {
+    "development-simulator": {
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "ios": {
+        "simulator": true
+      }
     },
     "preview": {
       "distribution": "internal"
     },
-    "production": {}
+    "production": {},
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "ios": {
+        "simulator": false
+      }
+    }
   },
   "submit": {
     "production": {}

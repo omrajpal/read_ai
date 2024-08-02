@@ -1,7 +1,8 @@
 // storageHelpers.js
 import * as SecureStore from 'expo-secure-store';
-
-const API_ENDPOINT = "https://5fkjvn2s62.execute-api.us-east-2.amazonaws.com/default/userData";  // Replace this with your API endpoint
+import { UserService } from '../service/user-service';
+import { UserData } from "../types/user"
+const userService = new UserService();
 
 // Get the user data from AsyncStorage
 export const fetchLocalData = async (key) => {
@@ -26,6 +27,7 @@ export const saveLocalData = async (key, data) => {
 
 // Remove user data from AsyncStorage
 const clearLocalData = async (key) => {
+    console.log(`Clearing data for user with key: ${key}`);
     try {
         await SecureStore.deleteItemAsync(key);
     } catch (error) {
@@ -34,12 +36,11 @@ const clearLocalData = async (key) => {
 }
 
 // Check if the user exists in the backend
-const userExistsOnBackend = async (key) => {
+const userExistsOnBackend = async (key: string): Promise<boolean> => {
     try {
-        console.log(`Calling ${API_ENDPOINT}/user/${key}`);
-        const response = await fetch(`${API_ENDPOINT}/user/${key}`);
-        const data = await response.json();
-        return !!data;
+        console.log(`Checking user with key: ${key}`);
+        const user = await userService.getUserById(key);
+        return !!user;
     } catch (error) {
         console.error("Error checking user on backend", error);
         return false;
@@ -47,54 +48,31 @@ const userExistsOnBackend = async (key) => {
 }
 
 // Update backend database
-const updateBackend = async (key, data) => {
+const updateBackend = async (key: string, data: UserData): Promise<void> => {
     try {
-        console.log(`Calling ${API_ENDPOINT}/update/${key}`);
-        const response = await fetch(`${API_ENDPOINT}/update/${key}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
-        if (!response.ok) {
-            throw new Error(`HTTP Error ${response.status}`);
-        }
+        console.log(`Updating user with key: ${key}`);
+        await userService.updateUser(key, data);
     } catch (error) {
         console.error("Error updating backend", error);
     }
 }
 
-// Delete user data from the backend
-const deleteFromBackend = async (key) => {
-    try {
-        console.log(`Calling ${API_ENDPOINT}/delete/${key}`);
-        const response = await fetch(`${API_ENDPOINT}/delete/${key}`, {
-            method: 'DELETE',
-        });
-        if (!response.ok) {
-            throw new Error(`HTTP Error ${response.status}`);
-        }
-    } catch (error) {
-        console.error("Error deleting user from backend", error);
-    }
-}
-
 // Update user data both locally and on the backend
-export const updateUser = async (key, updates) => {
-    const userData = await fetchLocalData(key) || {};
+export const updateUser = async (key: string, updates: Partial<UserData>): Promise<void> => {
+    const userData: UserData = await fetchLocalData(key) || {} as UserData;
 
     // Apply all updates to the local userData object
     for (const [field, value] of Object.entries(updates)) {
         if (typeof field === "string") {
-            userData[field] = value;
+            (userData as any)[field] = value;
         } else if (Array.isArray(field)) {
-            let target = userData;
-            for (let i = 0; i < field.length - 1; i++) {
-                if (!target[field[i]]) target[field[i]] = {};
-                target = target[field[i]];
+            const fieldArray = field as string[];
+            let target = userData as any;
+            for (let i = 0; i < fieldArray.length - 1; i++) {
+                if (!target[fieldArray[i]]) target[fieldArray[i]] = {};
+                target = target[fieldArray[i]];
             }
-            target[field[field.length - 1]] = value;
+            target[fieldArray[fieldArray.length - 1]] = value;
         }
     }
 
@@ -109,19 +87,20 @@ export const updateUser = async (key, updates) => {
         await updateBackend(key, userData);
     } else {
         // If the user does not exist on the backend, create a new user
-        await fetch(`${API_ENDPOINT}/create`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                key: key,
-                data: userData
-            })
-        });
+        const newUser: UserData = {
+            key: key,
+            name: userData.name || '',
+            cat: userData.cat || '',
+            gen: userData.gen || '',
+            favorites: userData.favorites || [],
+            booksRead: userData.booksRead || [],
+            booksReading: userData.booksReading || [],
+            booksOpened: userData.booksOpened || 0,
+            modal: userData.modal || { initial: false, 'v1.1': false }
+        };
+        await userService.createUser(newUser);
     }
 }
-
 
 // Reset local and backend data for a user
 export const resetLocalAndBackendData = async (key) => {
@@ -137,6 +116,16 @@ export const resetLocalAndBackendData = async (key) => {
     }
 }
 
+export const deleteFromBackend = async (key) => {
+    try {
+        console.log(`Deleting user with key: ${key}`);
+        await userService.deleteUser(key);
+    } catch (error) {
+        console.error("Error deleting user from backend", error);
+    }
+}
+
+// unneed code
 export const legacyUser = async () => {
     const dataString = await SecureStore.getItemAsync('data');
     if (dataString) { // legacy user
@@ -153,25 +142,21 @@ export const legacyUser = async () => {
             "gen": gen,
             "favorites": favorites
         }
-    } 
+    }
     return null
 }
 
 export const migrateData = async (uuidv4, updates) => {
     try {
         await updateUser(uuidv4, updates);
-        
 
-        let favoritesPromise = await SecureStore.deleteItemAsync('favorites');
-        let dataPromise = await SecureStore.deleteItemAsync('data');
-
-        if (favoritesPromise && dataPromise) {
+        try {
+            await SecureStore.deleteItemAsync('favorites');
+            await SecureStore.deleteItemAsync('data');
             console.log("Deletion successful");
-        } else {
-            console.log("Issue deleting old keys");
-            console.log(`favorites: ${favoritesPromise} data:${dataPromise} `)
+        } catch {
+            console.error("Error deleting old keys");
         }
-
     } catch (error) {
         console.error("Error during migration:", error);
     }

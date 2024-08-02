@@ -2,7 +2,7 @@
   "expo": {
     "name": "ReadAI",
     "slug": "readai",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "scheme": "acme",
     "githubUrl": "https://github.com/omrajpal/read_ai",
     "orientation": "portrait",
@@ -17,23 +17,35 @@
       "**/*"
     ],
     "ios": {
-      "buildNumber": "9",
+      "buildNumber": "1",
       "supportsTablet": true,
-      "bundleIdentifier": "com.asaravan.readai"
+      "bundleIdentifier": "com.asaravan.readai",
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
-      "versionCode": 9,
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "googleServicesFile": "./google-services.json",
+      "package": "com.asaravan.readai"
     },
     "web": {
       "favicon": "./assets/favicon.png",
       "bundler": "metro"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      "@react-native-firebase/app",
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static"
+          }
+        }
+      ]
     ],
     "extra": {
       "router": {

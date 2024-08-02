@@ -6,7 +6,6 @@ import { useState } from "react";
 import styles from "../../home/nearby/nearbyjobs.style";
 import { COLORS } from "../../../constants";
 import NearbyJobCard from "../../common/cards/nearby/NearbyJobCard";
-import useGenreFetch from "../../../hook/useGenreFetch";
 import useFetch from "../../../hook/useFetch";
 
 

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1013041323169",
+    "project_id": "readai-bbdff",
+    "storage_bucket": "readai-bbdff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1013041323169:android:4df748724acf12ac10a4e0",
+        "android_client_info": {
+          "package_name": "com.asaravan.readai"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDP6d9HKx15R_eQ018tKkAEbUMmzMX9sns"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

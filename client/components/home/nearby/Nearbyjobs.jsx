@@ -7,7 +7,7 @@ import styles from "./nearbyjobs.style";
 import { COLORS } from "../../../constants";
 import NearbyJobCard from "../../common/cards/nearby/NearbyJobCard";
 import DropdownComponent from "./Dropdown";
-import useGenreFetch from "../../../hook/useGenreFetch";
+import useFetch from "../../../hook/useFetch";
 
 
 const Nearbyjobs = ( { cat, gen} ) => {
@@ -20,7 +20,7 @@ const Nearbyjobs = ( { cat, gen} ) => {
     refetch();
   };
 
-  const { data, isLoading, error, refetch} = useGenreFetch(`/getBooks/category/${genre}`, {
+  const { data, isLoading, error, refetch} = useFetch(`/getBooks/category/${genre}`, {
     cat: cat,
     gen: gen,
   });

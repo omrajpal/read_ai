@@ -27,17 +27,14 @@ const JourneyPage = () => {
 
     // </ScrollView>
     <GluestackUIStyledProvider config={config}>
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
-      <Drawer.Screen options={{
-        headerStyle: { backgroundColor: COLORS.secondary },
-        headerShadowVisible: false,
-        headerLeft: () => (
-          <DrawerToggleButton 
-            tintColor={COLORS.lightWhite}
-          />
-        ),
-        title: "",
-      }}
+    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
+      <Drawer.Screen
+        options={{
+          headerStyle: { backgroundColor: COLORS.secondary },
+          headerShadowVisible: false,
+          headerLeft: () => <DrawerToggleButton tintColor={COLORS.lightWhite} />,
+          title: '',
+        }}
       />
       <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
       <Slide style={styles.journeySlide}
